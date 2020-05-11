@@ -36,145 +36,188 @@ function PopularList() {
     console.log("Effect has been run");
   }, []);
 
-  return (
-    <div className="popularList-background">
-      <AppNavbar />
-      <div className="title-background">
-        <h1 style={{ textAlign: "center", fontSize: 50 }}>
-          Most Liked Nostalgic Items This Week
-        </h1>
+
+  //-----------------------------------------------------------------------------------------------
+    // Check auten
+    // let { username } = useParams();
+
+    // const [answer, setAnswer]= useState("");
+    // var homepage= "/home/username/"+username;
+    // var aboutus= "/success/"+username;
+    // var check= "/check/"+username;
+    // var songList= "/songList/"+username;
+
+    const [ui, setui] = useState("");
+    let userN;
+
+    useEffect(() => {
+        const authen = async () => {
+        const results = await axios.post("/api/users/authen/" + username);
+        console.log("results:" + results.data);
+
+        let p = new Promise((resolve, reject) => {
+            if (results.data === 'error1209') {
+            reject("Fail");
+            } else {
+            userN = results.data;
+            setui(results.data);
+            resolve("sucess");
+            }
+        });
+        p.then((message) => {}).catch((message) => {});
+        };
+        authen();
+    }, []);
+    //--------------------------------------------------------------------------------------------------------------------
+
+    function redirect() {
+        return <Redirect to={"/error"} />;
+    }
+    if (ui === "") {
+        return <div>{redirect}</div>;
+    } else 
+    {
+
+    return (
+      <div className="popularList-background">
+        <AppNavbar />
+        <div className="title-background">
+          <h1 style={{ textAlign: "center", fontSize: 50 }}>
+            Most Liked Nostalgic Items This Week
+          </h1>
+        </div>
+
+        {/* Songs Collection */}
+        <h1 style={{ textAlign: "center" }}>Most Popular Songs</h1>
+        <CardGroup>
+          {popularList
+            .filter((listItem) => listItem.type == "Song")
+            .map((song) => {
+              return (
+                <div style={{ marginBottom: 19 }}>
+                  <Song
+                    key={song._id}
+                    id={song._id}
+                    title={song.title}
+                    artist={song.artist}
+                    img={song.coverImage}
+                    rank={song.rank}
+                    year={song.yearOnChart}
+                    current_user={username}
+                    likes={song.likeCount}
+                    //url = { "https://en.wikipedia.org/wiki/Boom Boom Pow"}
+                    url={`https://www.youtube.com/embed/${song.videoId}`}
+                  />
+                  {/* url={song.url} /> */}
+                </div>
+              );
+            })}
+        </CardGroup>
+        {/* Games Collection */}
+        <h1 style={{ textAlign: "center" }}>Most Popular Games</h1>
+        <CardGroup>
+          {popularList
+            .filter((listItem) => listItem.type === "Game")
+            .map((game) => {
+              return (
+                <div style={{ marginBottom: 19 }}>
+                  <Game
+                    key={game._id}
+                    id={game._id}
+                    title={game.name}
+                    img={game.image}
+                    release_date={game.release_date}
+                    year={game.year}
+                    current_user={username}
+                    likes={game.likeCount}
+                    url={`https://www.youtube.com/embed/${game.videoId}`}
+                  />
+                  {/* url={song.url} /> */}
+                </div>
+              );
+            })}
+        </CardGroup>
+        {/* Shows Collection */}
+        <h1 style={{ textAlign: "center" }}>Most Popular Shows</h1>
+        <CardGroup>
+          {popularList
+            .filter((listItem) => listItem.type === "Show")
+            .map((show) => {
+              return (
+                <div style={{ marginBottom: 19 }}>
+                  <Show
+                    key={show._id}
+                    id={show._id}
+                    descript={show.description}
+                    title={show.title}
+                    genre={show.genre}
+                    img={show.image}
+                    rank={show.title}
+                    year={show.year}
+                    release_date={show.release_date}
+                    current_user={username}
+                    url={`https://www.youtube.com/embed/${show.video}`}
+                    likes={show.likeCount}
+                  />
+                </div>
+              );
+            })}
+        </CardGroup>
+
+        {/* Movies Collection */}
+        <h1 style={{ textAlign: "center" }}>Most Popular Movies</h1>
+        <CardGroup>
+          {popularList
+            .filter((listItem) => listItem.type === "Movie")
+            .map((movie) => {
+              return (
+                <div style={{ marginBottom: 19 }}>
+                  <Movie
+                    key={movie._id}
+                    id={movie._id}
+                    descript={movie.description}
+                    title={movie.title}
+                    genre={movie.genre}
+                    img={movie.image}
+                    release_date={movie.release_date}
+                    year={movie.year}
+                    current_user={username}
+                    url={`https://www.youtube.com/embed/${movie.video}`}
+                    likes={movie.likeCount}
+                  />
+                </div>
+              );
+            })}
+        </CardGroup>
+        );
+        
+        {/* Books Collection */}
+        <h1 style={{textAlign: "center"}}>Most Popular Books</h1>
+        <CardGroup>
+          {popularList
+            .filter((listItem) => listItem.type === "Book")
+            .map((book) => {
+              return (
+                <div style={{ marginBottom: 19 }}>
+                <Book
+                key={book._id}
+                id={book._id}
+                current_user={username}
+                likes={book.likeCount}
+                descript={book.description}
+                title={book.title}
+                author={book.author}
+                url = {book.amazonUrl}
+                img ={book.image}
+                 />
+
+                </div>
+              );
+            })}
+        </CardGroup>
       </div>
-
-      {/* Songs Collection */}
-      <h1 style={{ textAlign: "center" }}>Most Popular Songs</h1>
-      <CardGroup>
-        {popularList
-          .filter((listItem) => listItem.type == "Song")
-          .map((song) => {
-            return (
-              <div style={{ marginBottom: 19 }}>
-                <Song
-                  key={song._id}
-                  id={song._id}
-                  title={song.title}
-                  artist={song.artist}
-                  img={song.coverImage}
-                  rank={song.rank}
-                  year={song.yearOnChart}
-                  current_user={username}
-                  likes={song.likeCount}
-                  //url = { "https://en.wikipedia.org/wiki/Boom Boom Pow"}
-                  url={`https://www.youtube.com/embed/${song.videoId}`}
-                />
-                {/* url={song.url} /> */}
-              </div>
-            );
-          })}
-      </CardGroup>
-      {/* Games Collection */}
-      <h1 style={{ textAlign: "center" }}>Most Popular Games</h1>
-      <CardGroup>
-        {popularList
-          .filter((listItem) => listItem.type === "Game")
-          .map((game) => {
-            return (
-              <div style={{ marginBottom: 19 }}>
-                <Game
-                  key={game._id}
-                  id={game._id}
-                  title={game.name}
-                  img={game.image}
-                  release_date={game.release_date}
-                  year={game.year}
-                  current_user={username}
-                  likes={game.likeCount}
-                  url={`https://www.youtube.com/embed/${game.videoId}`}
-                />
-                {/* url={song.url} /> */}
-              </div>
-            );
-          })}
-      </CardGroup>
-      {/* Shows Collection */}
-      <h1 style={{ textAlign: "center" }}>Most Popular Shows</h1>
-      <CardGroup>
-        {popularList
-          .filter((listItem) => listItem.type === "Show")
-          .map((show) => {
-            return (
-              <div style={{ marginBottom: 19 }}>
-                <Show
-                  key={show._id}
-                  id={show._id}
-                  descript={show.description}
-                  title={show.title}
-                  genre={show.genre}
-                  img={show.image}
-                  rank={show.title}
-                  year={show.year}
-                  release_date={show.release_date}
-                  current_user={username}
-                  url={`https://www.youtube.com/embed/${show.video}`}
-                  likes={show.likeCount}
-                />
-              </div>
-            );
-          })}
-      </CardGroup>
-
-      {/* Movies Collection */}
-      <h1 style={{ textAlign: "center" }}>Most Popular Movies</h1>
-      <CardGroup>
-        {popularList
-          .filter((listItem) => listItem.type === "Movie")
-          .map((movie) => {
-            return (
-              <div style={{ marginBottom: 19 }}>
-                <Movie
-                  key={movie._id}
-                  id={movie._id}
-                  descript={movie.description}
-                  title={movie.title}
-                  genre={movie.genre}
-                  img={movie.image}
-                  release_date={movie.release_date}
-                  year={movie.year}
-                  current_user={username}
-                  url={`https://www.youtube.com/embed/${movie.video}`}
-                  likes={movie.likeCount}
-                />
-              </div>
-            );
-          })}
-      </CardGroup>
-      );
-      
-      {/* Books Collection */}
-      <h1 style={{textAlign: "center"}}>Most Popular Books</h1>
-      <CardGroup>
-        {popularList
-          .filter((listItem) => listItem.type === "Book")
-          .map((book) => {
-            return (
-              <div style={{ marginBottom: 19 }}>
-              <Book
-              key={book._id}
-              id={book._id}
-              current_user={username}
-              likes={book.likeCount}
-              descript={book.description}
-              title={book.title}
-              author={book.author}
-              url = {book.amazonUrl}
-              img ={book.image}
-               />
-
-              </div>
-            );
-          })}
-      </CardGroup>
-    </div>
-  );
+    );
+  }
 }
 
 export default PopularList;

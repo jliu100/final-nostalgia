@@ -21,7 +21,7 @@ function Home() {
       let p = new Promise((resolve, reject) => {
         userN = results.data;
 
-        if (results.data === false) {
+        if (results.data === 'error1209') {
           reject("Fail");
         } else {
           resolve("sucess");

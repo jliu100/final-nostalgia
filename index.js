@@ -6,6 +6,7 @@ const cron = require("node-cron");
 const { getChart } = require("billboard-top-100");
 const scrapeYoutube = require("scrape-yt");
 
+
 //for user
 const session = require("express-session");
 const passport = require("passport");
@@ -284,7 +285,7 @@ cron.schedule('13 0 * * Sunday', () => {
   for(var y = 2009;y<=2015;y++)
   {
     let firstdate = y.toString()+'-'+todays_month+'-'+todays_day;
-    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/hardcover-fiction.json?api-key=xeUxPFrTYSAr1FRwcAm2XXHIoEt6MAFz')
+    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/hardcover-fiction.json?api-key='+process.env.APIkey)
         .then(response =>
           {
             for(var i =0;i<15;i++)
@@ -327,7 +328,7 @@ cron.schedule('15 0 * * Sunday', () => {
   for(var g = 2009;g<=2015;g++)
   {
     let firstdate = g.toString()+'-'+todays_month+'-'+todays_day;
-    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/hardcover-nonfiction.json?api-key=xeUxPFrTYSAr1FRwcAm2XXHIoEt6MAFz')
+    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/hardcover-nonfiction.json?api-key='+process.env.APIkey)
     .then(response =>
     {
       for(var i =0;i<15;i++)
@@ -369,7 +370,7 @@ cron.schedule('17 0 * * Sunday', () => {
   for(var yearz = 2009; yearz<=2015;yearz++)
   {
     let firstdate = yearz.toString()+'-'+todays_month+'-'+todays_day;
-    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/picture-books.json?api-key=xeUxPFrTYSAr1FRwcAm2XXHIoEt6MAFz')
+    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/picture-books.json?api-key='+process.env.APIkey)
     .then(response => {
     for (var i = 0; i < 10; i++)
     {
@@ -412,7 +413,7 @@ cron.schedule('20 0 * * Sunday', () => {
   for(var yearz = 2009; yearz<=2015;yearz++)
   {
     let firstdate = yearz.toString()+'-'+todays_month+'-'+todays_day;
-    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/series-books.json?api-key=xeUxPFrTYSAr1FRwcAm2XXHIoEt6MAFz')
+    axios.get('https://api.nytimes.com/svc/books/v3/lists/'+firstdate+'/series-books.json?api-key='+process.env.APIkey)
     .then(response => {
     for (var i = 0; i < 10; i++)
     {
@@ -586,7 +587,7 @@ cron.schedule('22 0 * * Sunday', () => {
   {
     let firstdate = r.toString()+'-'+todays_month+'-'+todays_day;
     let secondate = r.toString()+'-'+todays_month+'-'+nextthing;
-    const movieapikey = "https://api.themoviedb.org/3/discover/movie?api_key=219c752b1bd28c347bd087be9deb6add&language=en-US&region=US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&release_date.gte="+firstdate+"&release_date.lte="+secondate+""
+    const movieapikey = "https://api.themoviedb.org/3/discover/movie?api_key="+process.env.APIkeysec+"&language=en-US&region=US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&release_date.gte="+firstdate+"&release_date.lte="+secondate+""
     axios.get(movieapikey)
         .then(response =>
           {
@@ -758,7 +759,7 @@ cron.schedule('25 0 * * Sunday', () => {
     {
       let firstdate = m.toString()+'-'+todays_month+'-'+todays_day;
       let seconddate = m.toString()+'-'+todays_month+'-'+nextthing;
-      const showapikey = "https://api.themoviedb.org/3/discover/tv?api_key=219c752b1bd28c347bd087be9deb6add&language=en-US&sort_by=popularity.desc&first_air_date.gte="+firstdate+ "&first_air_date.lte="+seconddate+"&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en"
+      const showapikey = "https://api.themoviedb.org/3/discover/tv?api_key="+process.env.APIkeysec+"&language=en-US&sort_by=popularity.desc&first_air_date.gte="+firstdate+ "&first_air_date.lte="+seconddate+"&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en"
       axios.get(showapikey)
           .then(response =>
             {

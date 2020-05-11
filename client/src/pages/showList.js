@@ -63,7 +63,7 @@ function ShowList()
       console.log("results:" + results.data);
 
       let p = new Promise((resolve, reject) => {
-        if (results.data === false) {
+        if (results.data === 'error1209') {
           reject("Fail");
         } else {
           userN = results.data;

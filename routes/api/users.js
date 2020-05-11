@@ -7,7 +7,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 // Bring in the User Model
-var authen = false;
+var authen = 'error1209';
 var alreadyRegister=false;
 const User = require("../../models/User");
 const Song = require("../../models/Song");
@@ -22,10 +22,10 @@ passport.deserializeUser(User.deserializeUser());
 
 router.post("/authen/:username", async (req, res) => {
   let userN = req.params.username;
-  console.log(userN);
-  if (authen === false) {
+  // console.log(userN +", " +" authen "+ authen);
+  if (authen === 'error1209') {
     res.send(authen);
-  } else {
+  } else if(authen===userN){
     User.findOne({ username: userN }, function (err, foundUser) {
       if (err) {
         console.log(err);
@@ -34,6 +34,10 @@ router.post("/authen/:username", async (req, res) => {
         if (foundUser) res.json(foundUser);
       }
     });
+    
+  }
+  else {
+    res.send("error1209");
   }
 });
 
@@ -41,7 +45,7 @@ router.post("/authen/:username", async (req, res) => {
 // Their GET request will end up on this route (ap/users/logout)
 router.post("/logout", function (req, res) {
   req.logout();
-  authen = false;
+  authen = 'error1209';
   alreadyRegister=false;
   req.session.destroy(function (err) {
     res.clearCookie("connect.sid");
@@ -71,6 +75,8 @@ router.post("/login", function (req, res) {
   // First parameter is the user that is trying to login, second parameter is a callback
   req.login(newUser, function (err) {
     // If we are unable to find the user in our database
+
+    var userNa=req.body.username;
     if (err) {
       console.log(err);
     }
@@ -78,7 +84,7 @@ router.post("/login", function (req, res) {
     else {
       // Let us authenticate a user using the local strategy
       passport.authenticate("local")(req, res, function () {
-        authen = true;
+        authen = userNa;
         // If we have successfully authenticated the client
         if (req.isAuthenticated()) {
           console.log("You are authenticated");
@@ -95,6 +101,8 @@ router.post("/login", function (req, res) {
 // Their POST request will end up on this route (api/users/register)
 router.post("/register", function (req, res) {
   // Create a new User by instantiating a new mongoose User object
+
+  var userNa=req.body.username;
   let newUser = new User({
     username: req.body.username, // Capture the client/request's input of username and store it in the User object
     // password: req.body.password, // Capture the client/request's input of password and store it in the User object
@@ -109,7 +117,7 @@ router.post("/register", function (req, res) {
       passport.authenticate("local")(req, res, function () {
         if (req.isAuthenticated()) {
           console.log("You are authenticated");
-          authen = true;
+          authen = userNa;
           return res.redirect("/home/" + req.body.username);
         } else {
           console.log("You are NOT authenticated");
