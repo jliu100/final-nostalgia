@@ -55,7 +55,7 @@ function UserAccount() {
       console.log("results:" + results.data);
 
       let p = new Promise((resolve, reject) => {
-        if (results.data === 'error1209') {
+        if (results.data === 'error1209562263hebd8absusgbvxhgswgwvs') {
           reject("Fail");
         } else {
           userN = results.data;

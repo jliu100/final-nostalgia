@@ -7,7 +7,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 // Bring in the User Model
-var authen = 'error1209';
+var authen = 'error1209562263hebd8absusgbvxhgswgwvs';
 var alreadyRegister=false;
 const User = require("../../models/User");
 const Song = require("../../models/Song");
@@ -23,7 +23,7 @@ passport.deserializeUser(User.deserializeUser());
 router.post("/authen/:username", async (req, res) => {
   let userN = req.params.username;
   // console.log(userN +", " +" authen "+ authen);
-  if (authen === 'error1209') {
+  if (authen === 'error1209562263hebd8absusgbvxhgswgwvs') {
     res.send(authen);
   } else if(authen===userN){
     User.findOne({ username: userN }, function (err, foundUser) {
@@ -37,7 +37,7 @@ router.post("/authen/:username", async (req, res) => {
     
   }
   else {
-    res.send("error1209");
+    res.send('error1209562263hebd8absusgbvxhgswgwvs');
   }
 });
 
@@ -45,7 +45,7 @@ router.post("/authen/:username", async (req, res) => {
 // Their GET request will end up on this route (ap/users/logout)
 router.post("/logout", function (req, res) {
   req.logout();
-  authen = 'error1209';
+  authen = 'error1209562263hebd8absusgbvxhgswgwvs';
   alreadyRegister=false;
   req.session.destroy(function (err) {
     res.clearCookie("connect.sid");
