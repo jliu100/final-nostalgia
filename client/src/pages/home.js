@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     const authen = async () => {
       const results = await axios.post("/api/users/authen/" + username);
-      console.log("results:" + results.data);
+      // console.log("results:" + results.data);
 
       let p = new Promise((resolve, reject) => {
         userN = results.data;

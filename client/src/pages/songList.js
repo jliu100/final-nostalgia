@@ -59,7 +59,7 @@ function SongList() {
   useEffect(() => {
     const authen = async () => {
       const results = await axios.post("/api/users/authen/" + username);
-      console.log("results:" + results.data);
+      // console.log("results:" + results.data);
 
       let p = new Promise((resolve, reject) => {
         if (results.data === 'error1209562263hebd8absusgbvxhgswgwvs') {

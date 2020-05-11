@@ -128,7 +128,7 @@ router.post("/register", function (req, res) {
 });
 
 router.get("/check", async (req, res) => {
-  console.log(alreadyRegister);
+  // console.log(alreadyRegister);
     res.send(alreadyRegister);
 
   });
