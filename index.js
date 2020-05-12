@@ -807,7 +807,4 @@ app.listen(PORT, () => {
   console.log(`app running on port ${PORT}`);
 });
 
-// Youtube API Key: AIzaSyAAaHObzCPK3m7L04Iw5zewunADjJ1UxXQ
-// Movie Database API Key: 219c752b1bd28c347bd087be9deb6add
-// MongoDB password: Hunter10
-// Quota info: https://developers.google.com/youtube/v3/getting-started#quota
+
